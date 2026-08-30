@@ -1,11 +1,11 @@
 // ඔයාගේ Monetag Direct Link එක
 const monetagDirectLink = "https://omg10.com/4/11688292";
 
-// ඔයාගේ RapidAPI Key එක 
+// ඔයාගේ RapidAPI Key එක (ඇතුළත් කර ඇත)
 const RAPIDAPI_KEY = "fc3313aeb4msh4e250bdb8125d67p1e15a4jsna8c5d65275d1";
 
-// YTStream API Host එක
-const RAPIDAPI_HOST = "ytstream-download-youtube-videos.p.rapidapi.com"; 
+// ඔයා තෝරගත්ත "All-In-One" API එකේ Host එක
+const RAPIDAPI_HOST = "all-in-one-media-downloader-api.p.rapidapi.com"; 
 
 let isAdShown = false; 
 let directVideoUrl = ""; 
@@ -21,24 +21,11 @@ function fetchVideo() {
     document.getElementById('loader').style.display = 'block';
     document.getElementById('previewBox').style.display = 'none';
 
-    let videoId = "";
-    try {
-        if (urlInput.includes("youtu.be/")) {
-            videoId = urlInput.split("youtu.be/")[1].split("?")[0];
-        } else if (urlInput.includes("youtube.com/watch")) {
-            videoId = new URL(urlInput).searchParams.get("v");
-        }
-    } catch(e) {
-        console.error("Invalid URL format");
-    }
+    // ඕනෑම ලින්ක් එකක් ආරක්ෂිතව API එකට යවන්න පුළුවන් විදිහට Encode කිරීම
+    const encodedUrl = encodeURIComponent(urlInput);
 
-    if(!videoId) {
-        alert("කරුණාකර නිවැරදි YouTube ලින්ක් එකක් ලබා දෙන්න.");
-        document.getElementById('loader').style.display = 'none';
-        return;
-    }
-
-    const apiUrl = `https://${RAPIDAPI_HOST}/dl?id=${videoId}`;
+    // API එකේ Endpoint URL එක
+    const apiUrl = `https://${RAPIDAPI_HOST}/download?url=${encodedUrl}`;
 
     const options = {
         method: 'GET',
@@ -52,32 +39,29 @@ function fetchVideo() {
         .then(response => response.json())
         .then(data => {
             document.getElementById('loader').style.display = 'none';
+            console.log("All-in-One API Response:", data);
             
-            let foundUrl = data.url || data.link || data.download_url || data.dlink;
-            
-            if (!foundUrl && data.formats && data.formats.length > 0) {
-                foundUrl = data.formats[0].url;
-            } else if (!foundUrl && data.links && data.links.length > 0) {
-                foundUrl = data.links[0].url || data.links[0].link;
-            }
+            // All-in-One API වලින් ලින්ක් එක එවන නම සෙවීම
+            let foundUrl = data.url || data.video || data.video_url || data.download_url || (data.data && data.data.video) || (data.links && data.links[0]?.url) || (data.data && data.data.url);
+            let foundThumb = data.thumbnail || data.thumb || data.cover || data.picture || (data.data && data.data.thumbnail) || (data.data && data.data.cover);
+            let foundTitle = data.title || data.desc || data.description || "Ready to download your video!";
 
             if(foundUrl) {
                 directVideoUrl = foundUrl; 
                 
-                // API එක මත යැපෙන්නේ නැතුව, කෙලින්ම YouTube එකෙන්ම Thumbnail එක ගැනීම
-                document.getElementById('videoThumbnail').src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-                
-                if(data.title) {
-                    document.getElementById('videoTitle').innerText = data.title;
+                if(foundThumb) {
+                    document.getElementById('videoThumbnail').src = foundThumb;
                 } else {
-                    document.getElementById('videoTitle').innerText = "Ready to download your video!";
+                    document.getElementById('videoThumbnail').src = "https://via.placeholder.com/600x320/0f172a/6366f1?text=Video+Ready";
                 }
+                
+                document.getElementById('videoTitle').innerText = foundTitle;
                 
                 document.getElementById('previewBox').style.display = 'block';
                 isAdShown = false; 
                 document.getElementById('downloadBtn').innerHTML = '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Download Video';
             } else {
-                alert("වීඩියෝව සොයාගැනීමට නොහැකි විය: (Console එක පරීක්ෂා කරන්න)");
+                alert("වීඩියෝව සොයාගැනීමට නොහැකි විය: (කරුණාකර F12 ඔබලා Console එක බලන්න)");
             }
         })
         .catch(err => {
@@ -102,4 +86,4 @@ function handleDownload() {
             }, 3000);
         }
     }
-}
+              }
