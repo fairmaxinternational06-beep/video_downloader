@@ -158,25 +158,25 @@ button:hover {
     font-size: 0.9em;
 }
 
-/* වම් පැත්තේ Ad එක */
+/* වම් පැත්තේ Ad එක (උස 300px දක්වා වෙනස් කරන ලදි) */
 .ad-left {
     position: fixed;
     left: 20px;
     top: 50%;
     transform: translateY(-50%);
-    width: 160px; /* Monetag ඇඩ් එකේ සයිස් එක අනුව වෙනස් කරන්න */
-    height: 600px;
+    width: 160px;
+    height: 300px;
     z-index: 10;
 }
 
-/* දකුණු පැත්තේ Ad එක */
+/* දකුණු පැත්තේ Ad එක (උස 300px දක්වා වෙනස් කරන ලදි) */
 .ad-right {
     position: fixed;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
     width: 160px;
-    height: 600px;
+    height: 300px;
     z-index: 10;
 }
 
@@ -207,11 +207,11 @@ button:hover {
     
     .input-group input {
         width: 100%;
-        margin-bottom: 12px; /* බටන් එක සහ Input එක අතර පරතරය */
+        margin-bottom: 12px;
     }
     
     .input-group button {
-        width: 100%; /* ෆෝන් එකේදී බටන් එක සම්පූර්ණ පළලටම හැදීම */
+        width: 100%;
         margin-left: 0;
     }
 
