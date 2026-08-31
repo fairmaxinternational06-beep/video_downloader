@@ -5,7 +5,7 @@ const monetagDirectLink = "https://omg10.com/4/11688292";
 const RAPIDAPI_KEY = "fc3313aeb4msh4e250bdb8125d67p1e15a4jsna8c5d65275d1";
 
 // ඔයා තෝරගත්ත "All-In-One" API එකේ Host එක
-const RAPIDAPI_HOST = "all-in-one-media-downloader-api.p.rapidapi.com"; 
+const RAPIDAPI_HOST = "all-video-downloader3.p.rapidapi.com"; 
 
 let isAdShown = false; 
 let directVideoUrl = ""; 
