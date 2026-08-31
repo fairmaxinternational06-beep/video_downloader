@@ -1,5 +1,5 @@
-// ඔයාගේ Monetag Direct Link එක
-const monetagDirectLink = "https://omg10.com/4/11688292";
+// ඔයාගේ අලුත් Adsterra Smartlink එක (Direct Link) මෙතනට දාන්න
+const adsterraDirectLink = "ඔබේ-adsterra-smartlink-url-එක-මෙතන-දාන්න";
 
 // ඔයාගේ RapidAPI Key එක 
 const RAPIDAPI_KEY = "fc3313aeb4msh4e250bdb8125d67p1e15a4jsna8c5d65275d1";
@@ -49,18 +49,14 @@ function fetchVideo() {
             let foundUrl = "";
             
             if (data.medias && data.medias.length > 0) {
-                // මුලින්ම mp4 වීඩියෝ එකක් තියෙනවද කියලා බලනවා
                 const mp4Video = data.medias.find(m => m.type === "video" && m.ext === "mp4");
-                
                 if (mp4Video && mp4Video.url) {
                     foundUrl = mp4Video.url;
                 } else {
-                    // mp4 නැත්නම් තියෙන පළවෙනි වීඩියෝ එක ගන්නවා
                     const anyVideo = data.medias.find(m => m.type === "video");
                     if (anyVideo && anyVideo.url) {
                         foundUrl = anyVideo.url;
                     } else if (data.url) {
-                         // medias array එක නැත්නම් කෙලින්ම එන ලින්ක් එක ගන්නවා
                         foundUrl = data.url;
                     }
                 }
@@ -90,7 +86,7 @@ function fetchVideo() {
 
 function handleDownload() {
     if (!isAdShown) {
-        window.open(monetagDirectLink, '_blank');
+        window.open(adsterraDirectLink, '_blank');
         isAdShown = true; 
         document.getElementById('downloadBtn').innerHTML = "Click Again to Download";
     } else {
