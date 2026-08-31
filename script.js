@@ -1,5 +1,5 @@
 // ඔයාගේ අලුත් Adsterra Smartlink එක (Direct Link) මෙතනට දාන්න
-const adsterraDirectLink = "ඔබේ-adsterra-smartlink-url-එක-මෙතන-දාන්න";
+const adsterraDirectLink = "https://www.profitableratecpmnetwork.com/c73bzjx2?key=b2e3d0fefb6e666dc2a073685add7cfd";
 
 // ඔයාගේ RapidAPI Key එක 
 const RAPIDAPI_KEY = "fc3313aeb4msh4e250bdb8125d67p1e15a4jsna8c5d65275d1";
