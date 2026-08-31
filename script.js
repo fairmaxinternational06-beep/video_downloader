@@ -1,10 +1,10 @@
 // ඔයාගේ Monetag Direct Link එක
 const monetagDirectLink = "https://omg10.com/4/11688292";
 
-// ඔයාගේ RapidAPI Key එක (ඇතුළත් කර ඇත)
+// ඔයාගේ RapidAPI Key එක 
 const RAPIDAPI_KEY = "fc3313aeb4msh4e250bdb8125d67p1e15a4jsna8c5d65275d1";
 
-// ඔයා තෝරගත්ත "All-In-One" API එකේ Host එක
+// ඔයාගේ අලුත් API Host එක
 const RAPIDAPI_HOST = "all-video-downloader3.p.rapidapi.com"; 
 
 let isAdShown = false; 
@@ -21,18 +21,20 @@ function fetchVideo() {
     document.getElementById('loader').style.display = 'block';
     document.getElementById('previewBox').style.display = 'none';
 
-    // ඕනෑම ලින්ක් එකක් ආරක්ෂිතව API එකට යවන්න පුළුවන් විදිහට Encode කිරීම
-    const encodedUrl = encodeURIComponent(urlInput);
+    // අලුත් API එකේ නිවැරදි Endpoint URL එක
+    const apiUrl = `https://${RAPIDAPI_HOST}/all`;
 
-    // API එකේ Endpoint URL එක
-    const apiUrl = `https://${RAPIDAPI_HOST}/download?url=${encodedUrl}`;
-
+    // අලුත් API එකට අවශ්‍ය විදිහට POST request එකක් යැවීම
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'x-rapidapi-key': RAPIDAPI_KEY,
-            'x-rapidapi-host': RAPIDAPI_HOST
-        }
+            'x-rapidapi-host': RAPIDAPI_HOST,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            url: urlInput
+        })
     };
 
     fetch(apiUrl, options)
@@ -41,10 +43,10 @@ function fetchVideo() {
             document.getElementById('loader').style.display = 'none';
             console.log("All-in-One API Response:", data);
             
-            // All-in-One API වලින් ලින්ක් එක එවන නම සෙවීම
-            let foundUrl = data.url || data.video || data.video_url || data.download_url || (data.data && data.data.video) || (data.links && data.links[0]?.url) || (data.data && data.data.url);
-            let foundThumb = data.thumbnail || data.thumb || data.cover || data.picture || (data.data && data.data.thumbnail) || (data.data && data.data.cover);
-            let foundTitle = data.title || data.desc || data.description || "Ready to download your video!";
+            // API එකෙන් ලින්ක් එක එවන නම සෙවීම
+            let foundUrl = data.url || data.video || (data.data && data.data.url) || (data.data && data.data.video) || data.download_url;
+            let foundThumb = data.thumbnail || data.thumb || (data.data && data.data.thumbnail) || (data.data && data.data.cover) || data.cover;
+            let foundTitle = data.title || (data.data && data.data.title) || "Ready to download your video!";
 
             if(foundUrl) {
                 directVideoUrl = foundUrl; 
@@ -86,4 +88,4 @@ function handleDownload() {
             }, 3000);
         }
     }
-              }
+}
