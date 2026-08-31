@@ -195,3 +195,32 @@ button:hover {
         display: none;
     }
 }
+
+/* Phone වලින් බලද්දී Search බටන් එක සහ Input එක සැකසීම */
+@media (max-width: 768px) {
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .input-group input {
+        width: 100%;
+        margin-bottom: 12px; /* බටන් එක සහ Input එක අතර පරතරය */
+    }
+    
+    .input-group button {
+        width: 100%; /* ෆෝන් එකේදී බටන් එක සම්පූර්ණ පළලටම හැදීම */
+        margin-left: 0;
+    }
+
+    /* යටින් එන Ad එක ෆෝන් එකේදී මැදට කිරීම */
+    .ad-bottom {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 20px;
+        overflow: hidden;
+    }
+}
